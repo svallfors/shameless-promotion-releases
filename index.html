@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shameless Promotion — The Cinematic Version of Your Design</title>
+  <meta name="description" content="Shameless Promotion is a free Mac app and Figma plugin that turns your static Figma designs into cinematic animations. Cinematic design videos, in minutes.">
+  <meta property="og:title" content="Shameless Promotion">
+  <meta property="og:description" content="The cinematic version of your design. A free Mac app and Figma plugin.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shamelesspromotion.app/">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c0c0f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Geist:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+
+    <header class="hero">
+      <!-- the eyes: the app icon's subject, watching the cursor. Each pair
+           is anchored to its column at the design's offsets, pulled in on a
+           narrower window so it stays on screen, and drifts a little with
+           the cursor at its own depth (parallax, main.js) -->
+      <span class="eyes eyes-1" data-depth="0.018" aria-hidden="true"></span>
+      <span class="eyes eyes-2" data-depth="0.010" aria-hidden="true"></span>
+      <p class="eyebrow">This is <mark>Shameless Promotion</mark></p>
+      <h1>The Cinematic Version<br>of Your Design</h1>
+      <p class="lede">Instead of an image post with “just a little something I've been working on”, give your design the shameless promotion it deserves.</p>
+      <div class="cta">
+        <a class="button" id="download" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest"><span>Download now</span></a>
+        <p class="cta-note" id="cta-note">Free Mac + Figma plugin</p>
+      </div>
+    </header>
+
+    <!-- three films; the src is picked per color scheme in main.js
+         (videos/light-N.mp4 · videos/dark-N.mp4) and loaded when the row
+         scrolls into view. Until a file exists the poster stands in. -->
+    <section class="films" aria-label="Example films">
+      <figure class="film">
+        <video muted loop playsinline preload="none" data-light="videos/light-1.mp4" data-dark="videos/dark-1.mp4"></video>
+      </figure>
+      <figure class="film">
+        <video muted loop playsinline preload="none" poster="assets/poster-2.jpg" data-light="videos/light-2.mp4" data-dark="videos/dark-2.mp4"></video>
+      </figure>
+      <figure class="film">
+        <video muted loop playsinline preload="none" poster="assets/poster-3.jpg" data-light="videos/light-3.mp4" data-dark="videos/dark-3.mp4"></video>
+      </figure>
+    </section>
+
+    <section class="story">
+      <span class="eyes eyes-3" data-depth="0.014" aria-hidden="true"></span>
+      <h2>From Figma to <mark>Pure Cinema</mark>, in Minutes</h2>
+      <p>Shameless Promotion is a Mac app that turns your static Figma designs into cinematic animations. Fluid camera motions, simulated lens effects, and animated layers will bring attention to the highlights you want to emphasise.</p>
+      <p>The Figma plugin takes your selected frames and tagged layers and puts them in a video timeline, without causing or demanding any change to your files.</p>
+      <p>Spend a few minutes recomposing the scenes or tweaking the animations, or export straight away with the preset scenes in crystal sharp 4K resolution.</p>
+      <p>This is not After Effects, and it is not meant to replace walkthrough screen recordings. Shameless Promotion is the cheap upgrade to an otherwise unflattering PNG.</p>
+      <p>The most beautiful animations will still be made by motion designers. This app is for the rest of us.</p>
+      <p>I hope you'll like it!</p>
+      <img class="signature" src="assets/signature.svg" width="248" height="59" alt="Hampus Svallfors">
+    </section>
+
+    <footer class="foot">
+      <a class="pill" href="https://github.com/svallfors/shameless-promotion-releases">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="assets/github.svg#Frame"></use></svg>
+        GitHub
+      </a>
+      <p class="foot-line">New releases weekly • Designed by <mark class="low">Hampus Svallfors</mark> • Share your feedback 🙌</p>
+      <a class="pill" href="https://github.com/svallfors/shameless-promotion-releases/issues/new">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="assets/heart.svg#Frame"></use></svg>
+        Share feedback
+      </a>
+    </footer>
+
+  </main>
+
+  <!-- one eye pair, stamped into every .eyes by main.js: the egg from the
+       app icon (Figma group 2134221130) mirrored the way the icon mirrors
+       it, and a pupil that main.js aims at the cursor -->
+  <template id="eyes-template">
+    <svg viewBox="0 0 40 40" width="40" height="40">
+      <defs>
+        <path id="egg" d="M5.95898 1.41504C6.97668 0.62206 8.2803 0.0746626 9.52344 0.295898C11.8971 0.718315 13.5471 2.7454 14.7139 4.81641L14.9404 5.23047C15.9392 7.11129 16.6526 9.12942 17.0566 11.2187L17.1328 11.6377C17.2466 12.3319 17.3355 13.1081 17.3682 13.8057C17.376 13.9729 17.3899 14.1606 17.4033 14.3545C17.4169 14.5499 17.4306 14.7537 17.4404 14.9561C17.4603 15.3645 17.4618 15.7527 17.415 16.0518L17.4131 16.0674V16.082C17.3985 16.5359 17.3418 16.9519 17.3125 17.4307C17.2851 17.88 17.2524 18.2937 17.2021 18.7207L17.1455 19.1533L17.1445 19.165C17.1437 19.1736 17.1424 19.1829 17.1416 19.1914C17.1412 19.196 17.1401 19.2005 17.1396 19.2051C16.5431 22.4197 15.2002 25.9376 12.5869 27.9414C11.2004 29.0045 9.6425 29.5479 7.98438 29.3301C6.25568 29.1029 4.65309 27.9234 3.50977 26.5684L3.28711 26.2949C0.577991 22.7938 -0.168792 17.8277 0.450195 13.4707C1.04536 9.28188 2.65046 4.16561 5.95898 1.41504Z"/>
+      </defs>
+      <g class="eye" transform="translate(19.3 5.6) scale(-1 1)">
+        <use href="#egg" class="sclera"/>
+        <ellipse class="pupil" cx="8.85" cy="15.4" rx="4.65" ry="5.85"/>
+      </g>
+      <g class="eye" transform="translate(38.6 5) scale(-1 1)">
+        <use href="#egg" class="sclera"/>
+        <ellipse class="pupil" cx="8.85" cy="15.4" rx="4.65" ry="5.85"/>
+      </g>
+    </svg>
+  </template>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

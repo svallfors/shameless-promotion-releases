@@ -1,0 +1,309 @@
+/* Shameless Promotion — the page (2026-09-17). Built from Hampus's Figma frame
+   513:3155: Faculty Glyphic for the headlines (title case, salt/dlig on),
+   Geist for everything else. Light is the designed mode; dark is derived here
+   with the app's own night palette. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --text: #09090b;        /* headline */
+  --text-2: #232323;      /* eyebrow, lede */
+  --text-3: #52525e;      /* body */
+  --text-dim: #71717d;    /* notes, footer */
+  --pill: #f4f4f5;
+  --pill-hover: #e9e9ec;
+  --tile: #f4f4f5;
+  --hl: #fef199;          /* the marker highlight */
+  --hl-text: #232323;
+  --btn-border: #fce24c;
+  --btn-text: #09090b;
+  --sclera: #f9f9f7;
+  --eye-line: #000000;
+  --pupil: #000000;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c0c0f;
+    --text: #f4f4f5;
+    --text-2: #e4e4e7;
+    --text-3: #a1a1aa;
+    --text-dim: #8b8b94;
+    --pill: #1a1a1f;
+    --pill-hover: #26262c;
+    --tile: #16161a;
+    --hl: #f5c518;
+    --hl-text: #0c0c0f;
+    --btn-border: #d9a300;
+    --sclera: #f4f4f2;
+    --eye-line: #0c0c0f;
+    --pupil: #0c0c0f;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c0c0f;
+  --text: #f4f4f5;
+  --text-2: #e4e4e7;
+  --text-3: #a1a1aa;
+  --text-dim: #8b8b94;
+  --pill: #1a1a1f;
+  --pill-hover: #26262c;
+  --tile: #16161a;
+  --hl: #f5c518;
+  --hl-text: #0c0c0f;
+  --btn-border: #d9a300;
+  --sclera: #f4f4f2;
+  --eye-line: #0c0c0f;
+  --pupil: #0c0c0f;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-3);
+  font-family: Geist, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: "salt" 1, "ordn" 1, "dlig" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; }
+
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  min-height: 100vh;
+  padding: 64px 16px 16px;
+  overflow-x: clip;
+}
+
+/* ---------- type ---------- */
+h1, h2, .eyebrow {
+  font-family: "Faculty Glyphic", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  margin: 0;
+}
+h1 {
+  color: var(--text);
+  font-size: clamp(38px, 7vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+}
+.eyebrow, h2 {
+  color: var(--text-2);
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.02em;
+}
+mark {
+  background: var(--hl);
+  color: var(--hl-text);
+  padding: 0 1px;
+  border-radius: 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* the footer's low marker: a 9px stroke behind the bottom of the name */
+mark.low {
+  background: linear-gradient(to top, var(--hl) 0 9px, transparent 9px);
+  color: var(--text);
+  font-weight: 500;
+  padding: 0;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 672px;
+  text-align: center;
+}
+.hero .lede {
+  margin: 24px 0 0;
+  max-width: 476px;
+  color: var(--text-2);
+  font-size: 20px;
+  line-height: 32px;
+}
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+.cta-note {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-feature-settings: "salt" 1, "ordn" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "dlig" 1;
+}
+
+/* the yellow pill: the design's radial gradient (a hot spot near the top
+   center falling to amber at the rim), a hairline yellow border and the
+   two soft drop shadows; inner highlight along the top edge */
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  font-feature-settings: "salt" 1, "ordn" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "dlig" 1;
+  background:
+    radial-gradient(150px 42px at 48% 5%,
+      #fefee2 7%, #fef6b7 21%, #fdee8c 35%, #fde661 42%, #fcde36 49%, #f5b820 82%, #ee910a 100%);
+  box-shadow:
+    0 0.5px 1px rgba(101, 61, 21, 0.08),
+    0 2.4px 5.3px rgba(130, 74, 19, 0.14),
+    inset 0 0 0.5px 0.2px rgba(255, 255, 255, 0.6),
+    inset 0 1.6px 2.1px -0.5px #fefcd5,
+    inset 0 -0.25px 0.6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.button > span { opacity: 0.8; }
+.button:hover { filter: brightness(1.03); box-shadow:
+    0 1px 2px rgba(101, 61, 21, 0.10),
+    0 4px 10px rgba(130, 74, 19, 0.18),
+    inset 0 0 0.5px 0.2px rgba(255, 255, 255, 0.6),
+    inset 0 1.6px 2.1px -0.5px #fefcd5,
+    inset 0 -0.25px 0.6px rgba(0, 0, 0, 0.05); }
+.button:active { transform: translateY(1px); filter: brightness(0.98); }
+.button:focus-visible { outline: 2px solid var(--btn-border); outline-offset: 3px; }
+
+/* ---------- films ---------- */
+.films {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 981px;
+}
+.film {
+  margin: 0;
+  aspect-ratio: 469 / 296;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--tile);
+}
+.film video, .film img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.film video { background: var(--tile); }
+@media (max-width: 720px) {
+  .films { grid-template-columns: 1fr; max-width: 480px; }
+  /* the designed two-line break is for the wide headline; narrow, let
+     text-wrap: balance find the lines */
+  h1 br { display: none; }
+}
+
+/* ---------- story ---------- */
+.story {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 480px;
+}
+.story h2 { margin: 0; }
+.story p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+.story p + p { margin-top: -8px; }
+.signature {
+  display: block;
+  width: 248px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 8px;
+}
+/* the signature is black ink; flip it on the night ground */
+:root[data-theme="dark"] .signature { filter: invert(1); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .signature { filter: invert(1); }
+}
+
+/* ---------- footer ---------- */
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 64px;
+}
+.foot-line {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 13px;
+  text-align: center;
+  font-feature-settings: "salt" 1, "ordn" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "dlig" 1;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px 0 10px;
+  border-radius: 9999px;
+  background: var(--pill);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  font-feature-settings: "salt" 1, "ordn" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "dlig" 1;
+  transition: background 0.15s ease;
+}
+.pill:hover { background: var(--pill-hover); }
+.pill svg { color: var(--text); opacity: 0.8; }
+.pill:last-child svg { color: #f5a623; opacity: 1; }
+@media (max-width: 720px) {
+  .foot { flex-direction: column; gap: 20px; padding-top: 48px; }
+  .foot-line { order: 3; }
+}
+
+/* ---------- the eyes ---------- */
+/* anchored to the hero (672 wide) and the story (480 wide) at the design's
+   offsets; the min()/max() pull a pair inward when the window is narrower
+   than the design so it never leaves the screen or lands on the text */
+.eyes {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 1;
+}
+.eyes-1 { top: 91px;  left: min(calc(100% + 237px), calc(50vw + 280px)); }
+.eyes-2 { top: 396px; left: max(-266px, calc(352px - 50vw)); }
+.eyes-3 { top: 417px; left: min(calc(100% + 233px), calc(50vw + 184px)); }
+.eyes svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.eyes .sclera { fill: var(--sclera); stroke: var(--eye-line); stroke-width: 0.5; }
+.eyes .pupil { fill: var(--pupil); }
+@media (max-width: 720px) {
+  .eyes { display: none; }
+}
