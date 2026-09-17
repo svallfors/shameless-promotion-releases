@@ -96,6 +96,12 @@ const isDark = () => {
   const videos = [...document.querySelectorAll('.film video')];
   if (!videos.length) return;
   const srcFor = (v) => (isDark() ? v.dataset.dark : v.dataset.light);
+  // the still behind each film follows the scheme as well
+  const dress = (v) => {
+    const poster = isDark() ? (v.dataset.posterDark || v.dataset.posterLight) : (v.dataset.posterLight || v.dataset.posterDark);
+    if (poster) v.poster = poster; else v.removeAttribute('poster');
+  };
+  videos.forEach(dress);
   const load = (v) => {
     const src = srcFor(v);
     if (!src || v.dataset.loaded === src) return;
@@ -113,7 +119,7 @@ const isDark = () => {
     : null;
   videos.forEach((v) => (io ? io.observe(v) : load(v)));
   // the scheme flips while the page is open: swap the set
-  darkQuery.addEventListener('change', () => videos.forEach((v) => { if (v.dataset.loaded) load(v); }));
+  darkQuery.addEventListener('change', () => videos.forEach((v) => { dress(v); if (v.dataset.loaded) load(v); }));
 })();
 
 /* ---------- 3. the download button ---------- */

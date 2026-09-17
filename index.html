@@ -28,7 +28,7 @@
       <span class="eyes eyes-1" data-depth="0.018" aria-hidden="true"></span>
       <span class="eyes eyes-2" data-depth="0.010" aria-hidden="true"></span>
       <p class="eyebrow">This is <mark>Shameless Promotion</mark></p>
-      <h1>The Cinematic Version<br>of Your Design</h1>
+      <h1>The Cinematic Version <br>of Your Design</h1>
       <p class="lede">Instead of an image post with “just a little something I've been working on”, give your design the shameless promotion it deserves.</p>
       <div class="cta">
         <a class="button" id="download" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest"><span>Download now</span></a>
@@ -38,16 +38,17 @@
 
     <!-- three films; the src is picked per color scheme in main.js
          (videos/light-N.mp4 · videos/dark-N.mp4) and loaded when the row
-         scrolls into view. Until a file exists the poster stands in. -->
+         scrolls into view; the poster follows the scheme too (Hampus's dark
+         frame has its own three stills). Until a file exists the poster stands in. -->
     <section class="films" aria-label="Example films">
       <figure class="film">
-        <video muted loop playsinline preload="none" data-light="videos/light-1.mp4" data-dark="videos/dark-1.mp4"></video>
+        <video muted loop playsinline preload="none" data-poster-dark="assets/poster-dark-1.jpg" data-light="videos/light-1.mp4" data-dark="videos/dark-1.mp4"></video>
       </figure>
       <figure class="film">
-        <video muted loop playsinline preload="none" poster="assets/poster-2.jpg" data-light="videos/light-2.mp4" data-dark="videos/dark-2.mp4"></video>
+        <video muted loop playsinline preload="none" data-poster-light="assets/poster-light-2.jpg" data-poster-dark="assets/poster-dark-2.jpg" data-light="videos/light-2.mp4" data-dark="videos/dark-2.mp4"></video>
       </figure>
       <figure class="film">
-        <video muted loop playsinline preload="none" poster="assets/poster-3.jpg" data-light="videos/light-3.mp4" data-dark="videos/dark-3.mp4"></video>
+        <video muted loop playsinline preload="none" data-poster-light="assets/poster-light-3.jpg" data-poster-dark="assets/poster-dark-3.jpg" data-light="videos/light-3.mp4" data-dark="videos/dark-3.mp4"></video>
       </figure>
     </section>
 

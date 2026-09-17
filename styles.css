@@ -23,37 +23,39 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0c0c0f;
-    --text: #f4f4f5;
-    --text-2: #e4e4e7;
-    --text-3: #a1a1aa;
-    --text-dim: #8b8b94;
-    --pill: #1a1a1f;
-    --pill-hover: #26262c;
-    --tile: #16161a;
-    --hl: #f5c518;
-    --hl-text: #0c0c0f;
-    --btn-border: #d9a300;
-    --sclera: #f4f4f2;
-    --eye-line: #0c0c0f;
-    --pupil: #0c0c0f;
-  }
+    --bg: #18181b;
+    --text: #e4e4e7;
+    --text-2: #fafafa;
+    --text-3: #d4d4d8;
+    --text-dim: #71717d;
+    --pill: #27272a;
+    --pill-hover: #323236;
+    --tile: #27272a;
+    --hl: transparent;      /* dark: the marker becomes yellow type */
+    --hl-text: #fce24c;
+    --btn-border: #fce24c;
+    --btn-text: #18181b;
+    --sclera: #fafafa;
+    --eye-line: #18181b;
+    --pupil: #18181b;
+}
 }
 :root[data-theme="dark"] {
-  --bg: #0c0c0f;
-  --text: #f4f4f5;
-  --text-2: #e4e4e7;
-  --text-3: #a1a1aa;
-  --text-dim: #8b8b94;
-  --pill: #1a1a1f;
-  --pill-hover: #26262c;
-  --tile: #16161a;
-  --hl: #f5c518;
-  --hl-text: #0c0c0f;
-  --btn-border: #d9a300;
-  --sclera: #f4f4f2;
-  --eye-line: #0c0c0f;
-  --pupil: #0c0c0f;
+    --bg: #18181b;
+    --text: #e4e4e7;
+    --text-2: #fafafa;
+    --text-3: #d4d4d8;
+    --text-dim: #71717d;
+    --pill: #27272a;
+    --pill-hover: #323236;
+    --tile: #27272a;
+    --hl: transparent;      /* dark: the marker becomes yellow type */
+    --hl-text: #fce24c;
+    --btn-border: #fce24c;
+    --btn-text: #18181b;
+    --sclera: #fafafa;
+    --eye-line: #18181b;
+    --pupil: #18181b;
 }
 
 * { box-sizing: border-box; }
@@ -114,6 +116,11 @@ mark.low {
   color: var(--text);
   font-weight: 500;
   padding: 0;
+}
+/* dark (Hampus's dark frame): the name is underlined in the footer grey */
+:root[data-theme="dark"] mark.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) mark.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
 }
 
 /* ---------- hero ---------- */
