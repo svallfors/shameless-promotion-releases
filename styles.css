@@ -81,6 +81,9 @@ a { color: inherit; }
   padding: 64px 16px 16px;
   overflow-x: clip;
 }
+@media (max-width: 720px) {
+  .page { padding: 48px 24px 24px; gap: 40px; }
+}
 
 /* ---------- type ---------- */
 h1, h2, .eyebrow {
@@ -216,7 +219,24 @@ mark.low {
 }
 .film video { background: var(--tile); }
 @media (max-width: 720px) {
-  .films { grid-template-columns: 1fr; max-width: 480px; }
+  /* narrow: a native horizontal strip (no JS), each film wider than the
+     screen so it reads as a cinematic crop - --film-w is the knob */
+  .films {
+    --film-w: 150vw;
+    display: flex;
+    gap: 12px;
+    max-width: none;
+    width: calc(100% + 48px);
+    margin: 0 -24px;
+    padding: 0 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 24px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .films::-webkit-scrollbar { display: none; }
+  .film { flex: 0 0 var(--film-w); scroll-snap-align: start; }
   /* the designed two-line break is for the wide headline; narrow, let
      text-wrap: balance find the lines */
   h1 br { display: none; }
@@ -289,8 +309,8 @@ mark.low {
 .pill svg { color: var(--text); opacity: 0.8; }
 .pill:last-child svg { color: #f5a623; opacity: 1; }
 @media (max-width: 720px) {
-  .foot { flex-direction: column; gap: 20px; padding-top: 48px; }
-  .foot-line { order: 3; }
+  .foot { flex-wrap: wrap; justify-content: center; gap: 12px 8px; padding-top: 40px; }
+  .foot-line { flex-basis: 100%; order: 3; margin-top: 8px; line-height: 20px; text-wrap: balance; }
 }
 
 /* ---------- the eyes ---------- */
