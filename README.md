@@ -8,7 +8,7 @@ Instead of an image post with “just a little something I've been working on”
 
 ## From Figma to Pure Cinema, in Minutes
 
-Shameless Promotion is a Mac app that turns your static Figma designs into cinematic animations. Fluid camera motions, simulated lens effects, and animated layers put the focus where you want it.
+Shameless Promotion is a Mac app that turns your static Figma designs into cinematic animations. Fluid camera motions, simulated lens effects, and animated layers highlight the parts you're proudest of.
 
 The Figma plugin takes your selected frames and tagged layers and puts them in a video timeline, without causing or demanding any change to your files.
 
