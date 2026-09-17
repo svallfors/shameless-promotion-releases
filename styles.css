@@ -128,15 +128,19 @@ mark.low {
 
 /* ---------- hero ---------- */
 /* the hero fills the first screen: its content sits at the vertical
-   center and the films begin just under the fold (Hampus 2026-09-17).
-   svh so a phone's collapsing toolbar doesn't move it; off on narrow screens */
+   center and the film row ends about 24px under the fold, so most of the
+   films show and invite the scroll (Hampus 2026-09-17). The row's height
+   follows from its width (three tiles at 469:296 with 12px gaps); svh so a
+   phone's collapsing toolbar doesn't move it; off on narrow screens */
 .hero {
+  --row-w: min(100vw - 32px, 1800px);
+  --film-h: calc((var(--row-w) - 24px) / 3 * 296 / 469);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: calc(100svh - 64px - 48px + 24px);
+  min-height: calc(100svh - 64px - 48px - var(--film-h) + 24px);
 }
 .hero-inner {
   position: relative;
