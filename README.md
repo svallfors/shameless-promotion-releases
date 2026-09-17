@@ -36,4 +36,4 @@ A digit right after the tag pins the entrance order (`@1`, `@2`, `@3`); the rest
 
 New releases weekly. Something broke, or something is missing? [Share your feedback](https://github.com/svallfors/shameless-promotion-releases/issues/new) 🙌 In the app, **Help → Report a Problem…** prefills an issue with your versions, and **Help → Export Project for Debugging…** makes a zip you can attach.
 
-Designed by Hampus Svallfors.
+Designed by [Hampus Svallfors](https://svallfors.com).

@@ -114,16 +114,18 @@ mark {
   box-decoration-break: clone;
 }
 /* the footer's low marker: a 9px stroke behind the bottom of the name */
-mark.low {
+a.low {
   background: linear-gradient(to top, var(--hl) 0 9px, transparent 9px);
   color: var(--text);
   font-weight: 500;
   padding: 0;
+  text-decoration: none;
 }
+a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 /* dark (Hampus's dark frame): the name is underlined in the footer grey */
-:root[data-theme="dark"] mark.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
+:root[data-theme="dark"] a.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) mark.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
+  :root:not([data-theme="light"]) a.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
 }
 
 /* ---------- hero ---------- */
