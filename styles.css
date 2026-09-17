@@ -202,7 +202,7 @@ mark.low {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   width: 100%;
-  max-width: 981px;
+  max-width: 1800px; /* the films may run wider than the text (Hampus 2026-09-17) */
 }
 .film {
   margin: 0;
@@ -222,7 +222,7 @@ mark.low {
   /* narrow: a native horizontal strip (no JS), each film wider than the
      screen so it reads as a cinematic crop - --film-w is the knob */
   .films {
-    --film-w: 150vw;
+    --film-w: 100%;
     display: flex;
     gap: 12px;
     max-width: none;
