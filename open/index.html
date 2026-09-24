@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Shameless Promotion</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c0c0f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Geist:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* the Figma plugin's way into the app: Figma opens web links only, so
+       the plugin opens this page and the page opens the app through its
+       URL scheme (the browser asks first). The hero's film-row formula is
+       for the home page; here the block simply centres in the window. */
+    .open { min-height: calc(100svh - 64px); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero open">
+      <div class="hero-inner">
+        <p class="eyebrow"><mark>Shameless Promotion</mark></p>
+        <h1>Opening the App…</h1>
+        <p class="lede">If your browser asks, allow it to open Shameless Promotion. Then go back to Figma.</p>
+        <div class="cta">
+          <a class="button" id="open" href="shamelesspromotion://open"><span>Open Shameless Promotion</span></a>
+          <p class="cta-note">Don't have it yet? <a class="low" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest">Download the free Mac app</a></p>
+        </div>
+      </div>
+    </header>
+  </main>
+  <script>
+    // straight away on arrival; the button is the retry (and the click some
+    // browsers want before they hand a link to an app)
+    location.href = 'shamelesspromotion://open';
+  </script>
+</body>
+</html>
