@@ -18,6 +18,16 @@
        URL scheme (the browser asks first). The hero's film-row formula is
        for the home page; here the block simply centres in the window. */
     .open { min-height: calc(100svh - 64px); }
+    /* AFTER THE HAND-OFF (Hampus 2026-09-25, his words): the tab has done
+       its job, so it asks for feedback - a short letter in the home page's
+       story style, signed */
+    .thanks { min-height: calc(100svh - 64px); display: flex; align-items: center; justify-content: center; width: 100%; }
+    .thanks .story { gap: 24px; }
+    .thanks .cta { align-items: flex-start; }
+    .thanks .signature { margin-top: 0; }
+    .thanks .cta { margin-top: 0; }
+    .thanks .cta-note { font-size: 13px; line-height: normal; }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
@@ -33,11 +43,34 @@
         </div>
       </div>
     </header>
+
+    <section class="thanks" id="thanks" hidden>
+      <div class="story">
+        <h2>Two Minutes Can Make It Better</h2>
+        <p>I poured months into building Shameless Promotion on my own. If you have two minutes, an honest comment would mean a lot. Designer to designer: tell me what’s missing, what’s broken, or what’s working well.</p>
+        <a href="https://svallfors.com"><img class="signature" src="../assets/signature.svg" width="248" height="59" alt="Hampus Svallfors"></a>
+        <div class="cta">
+          <a class="button" href="https://github.com/svallfors/shameless-promotion-releases/issues/new"><span>Share feedback</span></a>
+          <p class="cta-note">Didn't open? <a class="low" href="shamelesspromotion://open">Open Shameless Promotion</a></p>
+        </div>
+      </div>
+    </section>
   </main>
   <script>
     // straight away on arrival; the button is the retry (and the click some
     // browsers want before they hand a link to an app)
     location.href = 'shamelesspromotion://open';
+    // THE HAND-OFF: the browser never says whether an app link worked, but
+    // the app coming forward takes the focus from this tab - that is the
+    // cue to turn the page into the feedback letter (a hint, not proof:
+    // the letter keeps a way to open the app again)
+    const thank = () => {
+      document.querySelector('.open').hidden = true;
+      document.getElementById('thanks').hidden = false;
+      document.title = 'Thanks for trying Shameless Promotion';
+    };
+    window.addEventListener('blur', thank, { once: true });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) thank(); });
   </script>
 </body>
 </html>
