@@ -135,6 +135,6 @@ const isDark = () => {
     const dmg = (rel.assets || []).find((a) => /\.dmg$/i.test(a.name));
     if (dmg) btn.href = dmg.browser_download_url;
     const v = String(rel.tag_name || '').replace(/^v/, '');
-    if (v && note) note.textContent = `Free Mac + Figma plugin · ${v}`;
+    if (v && note) note.textContent = `Free Mac app + Figma plugin · ${v}`;
   } catch { /* the button already links to the releases page */ }
 })();
