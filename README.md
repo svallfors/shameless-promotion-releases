@@ -26,11 +26,11 @@ Apple silicon, macOS 14 or later.
 
 ## How it works
 
-1. In Figma, put an `@` in front of the layers that should move. Everything untagged stays part of the frame.
+1. In Figma, end the name of each layer that should move with `@` (like `Chart @`). End a layer's name with `!` and the camera gives it a scene of its own. Everything untagged stays part of the frame.
 2. Select one or more frames and run **Plugins → Shameless Promotion for Figma**. If the app isn't open, the plugin offers to open it. It shows what it will send and asks whether to start a new project or add to the open one.
 3. In the app, pick a shot, aim the camera, press space to play, and export.
 
-A digit right after the tag pins the entrance order (`@1`, `@2`, `@3`); the rest stagger top to bottom. Video fills ride along as posters — drop the source file on the app window to play it.
+A digit right after the tag pins the entrance order (`Hero @1`, `Chart @2`); the rest stagger top to bottom. Video fills ride along as posters — drop the source file on the app window to play it.
 
 ## Feedback
 
