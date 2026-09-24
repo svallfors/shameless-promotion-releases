@@ -67,7 +67,7 @@
     const thank = () => {
       document.querySelector('.open').hidden = true;
       document.getElementById('thanks').hidden = false;
-      document.title = 'Thanks for trying Shameless Promotion';
+      document.title = 'Please share your feedback';
     };
     window.addEventListener('blur', thank, { once: true });
     document.addEventListener('visibilitychange', () => { if (document.hidden) thank(); });
