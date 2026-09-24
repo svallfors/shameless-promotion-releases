@@ -4,7 +4,7 @@
 
 Instead of an image post with “just a little something I've been working on”, give your design the shameless promotion it deserves.
 
-**[Download now →](https://github.com/svallfors/shameless-promotion-releases/releases/latest)** Free Mac app + Figma plugin. Website: [shamelesspromotion.app](https://shamelesspromotion.app)
+**[Download now →](https://github.com/svallfors/shameless-promotion-releases/releases/latest)** Free Mac app + [Figma plugin](https://www.figma.com/community/plugin/1685059029492451885). Website: [shamelesspromotion.app](https://shamelesspromotion.app)
 
 ## From Figma to Pure Cinema, in Minutes
 
@@ -20,14 +20,14 @@ This is not After Effects, and it is not meant to replace walkthrough screen rec
 
 1. Open the `.dmg` from the [latest release](https://github.com/svallfors/shameless-promotion-releases/releases/latest) and drag **Shameless Promotion** to Applications. It is signed and notarized, so it opens like any other Mac app.
 2. Open it once.
-3. In Figma: **Plugins → Development → Import plugin from manifest…** and pick `manifest.json` from the unzipped `shameless-promotion-figma-plugin.zip` in the same release.
+3. Get the Figma plugin from [Figma Community](https://www.figma.com/community/plugin/1685059029492451885).
 
 Apple silicon, macOS 14 or later.
 
 ## How it works
 
 1. In Figma, put an `@` in front of the layers that should move. Everything untagged stays part of the frame.
-2. Select one or more frames and run **Plugins → Shameless Promotion for Figma**. The plugin opens the app if it isn't running, shows what it will send, and asks whether to start a new project or add to the open one.
+2. Select one or more frames and run **Plugins → Shameless Promotion for Figma**. If the app isn't open, the plugin offers to open it. It shows what it will send and asks whether to start a new project or add to the open one.
 3. In the app, pick a shot, aim the camera, press space to play, and export.
 
 A digit right after the tag pins the entrance order (`@1`, `@2`, `@3`); the rest stagger top to bottom. Video fills ride along as posters — drop the source file on the app window to play it.

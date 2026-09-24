@@ -125,7 +125,6 @@ const isDark = () => {
 /* ---------- 3. the download button ---------- */
 (async () => {
   const btn = document.getElementById('download');
-  const note = document.getElementById('cta-note');
   if (!btn) return;
   try {
     const r = await fetch('https://api.github.com/repos/svallfors/shameless-promotion-releases/releases/latest',
@@ -135,6 +134,8 @@ const isDark = () => {
     const dmg = (rel.assets || []).find((a) => /\.dmg$/i.test(a.name));
     if (dmg) btn.href = dmg.browser_download_url;
     const v = String(rel.tag_name || '').replace(/^v/, '');
-    if (v && note) note.textContent = `Free Mac app + Figma plugin · ${v}`;
+    // the version rides after the note; the plugin link stays a link
+    const ver = document.getElementById('cta-version');
+    if (v && ver) ver.textContent = ` · ${v}`;
   } catch { /* the button already links to the releases page */ }
 })();
