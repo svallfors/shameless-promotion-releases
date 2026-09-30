@@ -30,7 +30,7 @@
         <span class="eyes eyes-2" data-depth="0.010" aria-hidden="true"></span>
         <p class="eyebrow">This is <mark>Shameless Promotion</mark></p>
         <h1>The Cinematic Version <br>of Your Design</h1>
-        <p class="lede">Instead of an image post with “just a little something I've been working on”, give your design the shameless promotion it deserves.</p>
+        <p class="lede">Instead of an image post with “just a little something I’ve been working on”, give your design the grand reveal it deserves.</p>
         <div class="cta">
           <a class="button" id="download" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest"><span>Download now</span></a>
           <p class="cta-note" id="cta-note">Free Mac app + <a class="low" href="https://www.figma.com/community/plugin/1685059029492451885">Figma plugin</a><span id="cta-version"></span></p>
@@ -63,15 +63,37 @@
       <p>This is not After Effects, and it is not meant to replace walkthrough screen recordings. Shameless Promotion is the cheap upgrade to an otherwise unflattering PNG.</p>
       <p>The most beautiful animations will still be made by motion designers. This app is for the rest of us.</p>
       <p>I hope you'll like it!</p>
-      <img class="signature" src="assets/signature.svg" width="248" height="59" alt="Hampus Svallfors">
+      <div class="sign">
+        <img class="avatar" src="assets/hampus.jpg" width="64" height="64" alt="">
+        <div class="sign-text">
+          <img class="signature" src="assets/signature.svg" width="248" height="59" alt="">
+          <p class="sign-name">Hampus Svallfors</p>
+        </div>
+      </div>
     </section>
 
+    <!-- PRIVACY (Hampus 2026-09-30, "we don't track anything - something we
+         should be proud about"): a contained last section, the claim and a
+         short checklist. Every row is checked against the code: the app's
+         only outside request is the update check to GitHub; the plugin's
+         network access is localhost only (manifest allowedDomains). -->
+    <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Shameless Promotion doesn’t collect, share or sell any of your data.</h2>
+      <dl class="checklist">
+        <div><dt>Personal data</dt><dd>None collected</dd></div>
+        <div><dt>Account</dt><dd>None needed</dd></div>
+        <div><dt>Analytics</dt><dd>None in the app or the plugin</dd></div>
+        <div><dt>Your designs</dt><dd>Stay on your Mac. The Figma plugin only talks to the app on your computer.</dd></div>
+        <div><dt>Updates</dt><dd>The app checks GitHub for new versions. No ID or personal data is sent.</dd></div>
+        <div><dt>Prototypes</dt><dd>Recording opens your prototype on figma.com, under Figma’s own policy.</dd></div>
+      </dl>
+    </section>
+
+    <!-- the footer within the content's width (Hampus 2026-09-30): the two
+         facts stacked on the left (the designer first), feedback on the right; the GitHub pill
+         and "Share your feedback 🙌" retired -->
     <footer class="foot">
-      <a class="pill" href="https://github.com/svallfors/shameless-promotion-releases">
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="assets/github.svg#Frame"></use></svg>
-        GitHub
-      </a>
-      <p class="foot-line">New releases weekly • Designed by <a class="low" href="https://svallfors.com">Hampus Svallfors</a> • Share your&nbsp;feedback&nbsp;🙌</p>
+      <p class="foot-line"><span>Designed by <a class="low" href="https://svallfors.com">Hampus Svallfors</a></span><span>New releases weekly</span></p>
       <a class="pill" href="https://github.com/svallfors/shameless-promotion-releases/issues/new">
         <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="assets/heart.svg#Frame"></use></svg>
         Share feedback
@@ -82,19 +104,48 @@
 
   <!-- one eye pair, stamped into every .eyes by main.js: the egg from the
        app icon (Figma group 2134221130) mirrored the way the icon mirrors
-       it, and a pupil that main.js aims at the cursor -->
+       it, a pupil (with a glint for excitement) that main.js aims at the
+       cursor, and lids that close like curtains, the upper one down to a
+       line a little below the middle and the lower one up to meet it -->
   <template id="eyes-template">
     <svg viewBox="0 0 40 40" width="40" height="40">
       <defs>
         <path id="egg" d="M5.95898 1.41504C6.97668 0.62206 8.2803 0.0746626 9.52344 0.295898C11.8971 0.718315 13.5471 2.7454 14.7139 4.81641L14.9404 5.23047C15.9392 7.11129 16.6526 9.12942 17.0566 11.2187L17.1328 11.6377C17.2466 12.3319 17.3355 13.1081 17.3682 13.8057C17.376 13.9729 17.3899 14.1606 17.4033 14.3545C17.4169 14.5499 17.4306 14.7537 17.4404 14.9561C17.4603 15.3645 17.4618 15.7527 17.415 16.0518L17.4131 16.0674V16.082C17.3985 16.5359 17.3418 16.9519 17.3125 17.4307C17.2851 17.88 17.2524 18.2937 17.2021 18.7207L17.1455 19.1533L17.1445 19.165C17.1437 19.1736 17.1424 19.1829 17.1416 19.1914C17.1412 19.196 17.1401 19.2005 17.1396 19.2051C16.5431 22.4197 15.2002 25.9376 12.5869 27.9414C11.2004 29.0045 9.6425 29.5479 7.98438 29.3301C6.25568 29.1029 4.65309 27.9234 3.50977 26.5684L3.28711 26.2949C0.577991 22.7938 -0.168792 17.8277 0.450195 13.4707C1.04536 9.28188 2.65046 4.16561 5.95898 1.41504Z"/>
+        <clipPath id="egg-clip"><use href="#egg"/></clipPath>
       </defs>
       <g class="eye" transform="translate(19.3 5.6) scale(-1 1)">
-        <use href="#egg" class="sclera"/>
-        <ellipse class="pupil" cx="8.85" cy="15.4" rx="4.65" ry="5.85"/>
+        <g class="body">
+          <use href="#egg" class="sclera"/>
+          <g class="iris">
+            <ellipse class="pupil" cx="8.85" cy="15.4" rx="4.65" ry="5.85"/>
+            <circle class="glint" cx="10.7" cy="12.9" r="0"/>
+          </g>
+          <g clip-path="url(#egg-clip)">
+            <path class="lid lower" d="M-2 17 Q8.7 19.6 20 17 V33 H-2 Z"/>
+            <g class="upper">
+              <path class="lid" d="M-2 -8 H20 V17 Q8.7 19.6 -2 17 Z"/>
+              <path class="lid-line" d="M-2 17 Q8.7 19.6 20 17"/>
+            </g>
+          </g>
+          <use href="#egg" class="rim"/>
+        </g>
       </g>
       <g class="eye" transform="translate(38.6 5) scale(-1 1)">
-        <use href="#egg" class="sclera"/>
-        <ellipse class="pupil" cx="8.85" cy="15.4" rx="4.65" ry="5.85"/>
+        <g class="body">
+          <use href="#egg" class="sclera"/>
+          <g class="iris">
+            <ellipse class="pupil" cx="8.85" cy="15.4" rx="4.65" ry="5.85"/>
+            <circle class="glint" cx="10.7" cy="12.9" r="0"/>
+          </g>
+          <g clip-path="url(#egg-clip)">
+            <path class="lid lower" d="M-2 17 Q8.7 19.6 20 17 V33 H-2 Z"/>
+            <g class="upper">
+              <path class="lid" d="M-2 -8 H20 V17 Q8.7 19.6 -2 17 Z"/>
+              <path class="lid-line" d="M-2 17 Q8.7 19.6 20 17"/>
+            </g>
+          </g>
+          <use href="#egg" class="rim"/>
+        </g>
       </g>
     </svg>
   </template>

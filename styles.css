@@ -10,6 +10,7 @@
   --text-2: #232323;      /* eyebrow, lede */
   --text-3: #52525e;      /* body */
   --text-dim: #71717d;    /* notes, footer */
+  --text-label: #71717d;  /* the privacy checklist's labels */
   --pill: #f4f4f5;
   --pill-hover: #e9e9ec;
   --tile: #f4f4f5;
@@ -28,6 +29,7 @@
     --text-2: #fafafa;
     --text-3: #d4d4d8;
     --text-dim: #71717d;
+    --text-label: #a1a1aa;
     --pill: #27272a;
     --pill-hover: #323236;
     --tile: #27272a;
@@ -46,6 +48,7 @@
     --text-2: #fafafa;
     --text-3: #d4d4d8;
     --text-dim: #71717d;
+    --text-label: #a1a1aa;
     --pill: #27272a;
     --pill-hover: #323236;
     --tile: #27272a;
@@ -113,13 +116,17 @@ mark {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-/* the footer's low marker: a 9px stroke behind the bottom of the name */
+/* the small links' marker: fully behind the text, like the mark (Hampus
+   2026-09-30 - the low 9px stroke sat offset under small type) */
 a.low {
-  background: linear-gradient(to top, var(--hl) 0 9px, transparent 9px);
+  background: var(--hl);
   color: var(--text);
   font-weight: 500;
-  padding: 0;
+  padding: 0 1px;
+  border-radius: 1px;
   text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 /* dark (Hampus's dark frame): the name is underlined in the footer grey */
@@ -278,17 +285,66 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
   line-height: 24px;
 }
 .story p + p { margin-top: -8px; }
+/* the signature a little smaller, the name in plain type under it (Hampus
+   2026-09-30); the ink is decorative, the name reads */
+/* the face from the plugin's Community page, beside the signature (Hampus 2026-09-30) */
+.sign { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+.avatar { display: block; flex: none; width: 64px; height: 64px; border-radius: 50%; }
+.sign-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .signature {
   display: block;
-  width: 248px;
+  width: 192px;
   max-width: 100%;
   height: auto;
-  margin-top: 8px;
 }
+.story .sign-name { margin: 0; }
 /* the signature is black ink; flip it on the night ground */
 :root[data-theme="dark"] .signature { filter: invert(1); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .signature { filter: invert(1); }
+}
+
+/* ---------- privacy ---------- */
+/* a contained last section (Hampus 2026-09-30): the claim, then a checklist
+   of label and answer rows on the tile ground */
+.privacy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--tile);
+}
+/* the claim IS the section's heading (Hampus 2026-09-30), set like the
+   body text it replaced - not the display face */
+.privacy h2 {
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: normal;
+  color: var(--text-3);
+  text-wrap: balance;
+}
+.checklist {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+.checklist > div {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid color-mix(in srgb, var(--text-dim) 22%, transparent);
+}
+.checklist dt { color: var(--text-label); }
+.checklist dd { margin: 0; color: var(--text-3); }
+@media (max-width: 480px) {
+  .checklist > div { grid-template-columns: 1fr; gap: 2px; }
 }
 
 /* ---------- footer ---------- */
@@ -298,14 +354,19 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
   justify-content: space-between;
   gap: 16px;
   width: 100%;
+  max-width: 480px;
   margin-top: auto;
   padding-top: 64px;
 }
 .foot-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   margin: 0;
   color: var(--text-dim);
   font-size: 13px;
-  text-align: center;
+  line-height: 18px;
+  text-align: left;
   font-feature-settings: "salt" 1, "ordn" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "dlig" 1;
 }
 .pill {
@@ -329,8 +390,7 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 .pill svg { color: var(--text); opacity: 0.8; }
 .pill:last-child svg { color: #f5a623; opacity: 1; }
 @media (max-width: 720px) {
-  .foot { flex-wrap: wrap; justify-content: center; gap: 12px 8px; padding-top: 40px; }
-  .foot-line { flex-basis: 100%; order: 3; margin-top: 8px; line-height: 20px; text-wrap: balance; }
+  .foot { padding-top: 40px; }
 }
 
 /* ---------- the eyes ---------- */
@@ -349,8 +409,10 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 .eyes-2 { top: 396px; left: max(-266px, calc(352px - 50vw)); }
 .eyes-3 { top: 417px; left: min(calc(100% + 233px), calc(50vw + 184px)); }
 .eyes svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.eyes .sclera { fill: var(--sclera); stroke: var(--eye-line); stroke-width: 0.5; }
+.eyes .sclera, .eyes .lid { fill: var(--sclera); }
+.eyes .rim, .eyes .lid-line { fill: none; stroke: var(--eye-line); stroke-width: 0.5; vector-effect: non-scaling-stroke; }
 .eyes .pupil { fill: var(--pupil); }
+.eyes .glint { fill: var(--sclera); }
 @media (max-width: 720px) {
   .eyes { display: none; }
 }
