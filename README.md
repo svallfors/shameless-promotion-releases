@@ -2,7 +2,7 @@
 
 **The Cinematic Version of Your Design.**
 
-Instead of an image post with “just a little something I've been working on”, give your design the shameless promotion it deserves.
+Instead of an image post with “just a little something I’ve been working on”, give your design the grand reveal it deserves.
 
 **[Download now →](https://github.com/svallfors/shameless-promotion-releases/releases/latest)** Free Mac app + [Figma plugin](https://www.figma.com/community/plugin/1685059029492451885). Website: [shamelesspromotion.app](https://shamelesspromotion.app)
 
@@ -15,6 +15,8 @@ The Figma plugin takes your selected frames and tagged layers and puts them in a
 Spend a few minutes recomposing the scenes or tweaking the animations, or export straight away with the preset scenes in crystal sharp 4K resolution.
 
 This is not After Effects, and it is not meant to replace walkthrough screen recordings. Shameless Promotion is the cheap upgrade to an otherwise unflattering PNG. The most beautiful animations will still be made by motion designers. This app is for the rest of us.
+
+I hope you'll like it!
 
 ## Install
 
@@ -32,8 +34,19 @@ Apple silicon, macOS 14 or later.
 
 A digit right after the tag pins the entrance order (`Hero @1`, `Chart @2`); the rest stagger top to bottom. Video fills ride along as posters — drop the source file on the app window to play it.
 
+## Privacy
+
+Shameless Promotion doesn’t collect, share or sell any of your data.
+
+- **Personal data:** None collected
+- **Account:** None needed
+- **Analytics:** None in the app or the plugin
+- **Your designs:** Stay on your Mac. The Figma plugin only talks to the app on your computer.
+- **Updates:** The app checks GitHub for new versions. No ID or personal data is sent.
+- **Prototypes:** Recording opens your prototype on figma.com, under Figma’s own policy.
+
 ## Feedback
 
-New releases weekly. Something broke, or something is missing? [Share your feedback](https://github.com/svallfors/shameless-promotion-releases/issues/new) 🙌 In the app, **Help → Report a Problem…** prefills an issue with your versions, and **Help → Export Project for Debugging…** makes a zip you can attach.
+New releases weekly. Something broke, or something is missing? [Share feedback](https://github.com/svallfors/shameless-promotion-releases/issues/new). In the app, **Help → Report a Problem…** prefills an issue with your versions, and **Help → Export Project for Debugging…** makes a zip you can attach.
 
 Designed by [Hampus Svallfors](https://svallfors.com).
