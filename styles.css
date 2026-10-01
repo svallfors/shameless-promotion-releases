@@ -10,7 +10,7 @@
   --text-2: #232323;      /* eyebrow, lede */
   --text-3: #52525e;      /* body */
   --text-dim: #71717d;    /* notes, footer */
-  --text-label: #71717d;  /* the privacy checklist's labels */
+  --text-label: #71717d;  /* the checklists' labels */
   --pill: #f4f4f5;
   --pill-hover: #e9e9ec;
   --tile: #f4f4f5;
@@ -134,6 +134,18 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) a.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
 }
+/* links that read as the text around them until hovered, then take the
+   yellow marker with darker type (Hampus 2026-10-01; on the dark ground the
+   marker is yellow type, as everywhere). The marker's padding is pulled back
+   with a negative margin so the words never move */
+a.quiet {
+  text-decoration: none;
+  padding: 0 1px;
+  margin: 0 -1px;
+  border-radius: 1px;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-text); }
 
 /* ---------- hero ---------- */
 /* the hero fills the first screen: its content sits at the vertical
@@ -304,10 +316,18 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
   :root:not([data-theme="light"]) .signature { filter: invert(1); }
 }
 
-/* ---------- privacy ---------- */
-/* a contained last section (Hampus 2026-09-30): the claim, then a checklist
-   of label and answer rows on the tile ground */
-.privacy {
+/* ---------- privacy and requirements ---------- */
+/* contained last sections (Hampus 2026-09-30): the claim, then a checklist
+   of label and answer rows on the tile ground; the two tiles sit close */
+.tiles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.facts {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -319,7 +339,7 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 }
 /* the claim IS the section's heading (Hampus 2026-09-30), set like the
    body text it replaced - not the display face */
-.privacy h2 {
+.facts h2 {
   font-family: inherit;
   font-size: 16px;
   line-height: 24px;
@@ -408,6 +428,9 @@ a.low:hover { text-decoration: underline; text-underline-position: from-font; }
 .eyes-1 { top: 91px;  left: min(calc(100% + 237px), calc(50vw + 280px)); }
 .eyes-2 { top: 396px; left: max(-266px, calc(352px - 50vw)); }
 .eyes-3 { top: 417px; left: min(calc(100% + 233px), calc(50vw + 184px)); }
+/* left of the privacy tile, by its foot (Hampus 2026-10-01); the tile is
+   480 wide and centred, so 256px - 50vw keeps the pair 16px off the edge */
+.eyes-4 { top: 387px; left: max(-301px, calc(256px - 50vw)); }
 .eyes svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .eyes .sclera, .eyes .lid { fill: var(--sclera); }
 .eyes .rim, .eyes .lid-line { fill: none; stroke: var(--eye-line); stroke-width: 0.5; vector-effect: non-scaling-stroke; }

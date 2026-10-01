@@ -9,6 +9,29 @@
   <meta property="og:description" content="The cinematic version of your design. A free Mac app and Figma plugin.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shamelesspromotion.app/">
+  <link rel="canonical" href="https://shamelesspromotion.app/">
+  <!-- what search engines and AI agents read directly: a free macOS app,
+       what it needs, where to get it. No version here; it ships weekly -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Shameless Promotion",
+    "description": "A free Mac app and Figma plugin that turns your static Figma designs into cinematic animations, with camera motions, simulated lens effects and animated layers, exported in 4K.",
+    "url": "https://shamelesspromotion.app/",
+    "downloadUrl": "https://github.com/svallfors/shameless-promotion-releases/releases/latest",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "macOS 14 or later",
+    "softwareRequirements": "Apple silicon Mac, Figma",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Hampus Svallfors", "url": "https://svallfors.com" },
+    "sameAs": [
+      "https://www.figma.com/community/plugin/1685059029492451885",
+      "https://github.com/svallfors/shameless-promotion-releases"
+    ]
+  }
+  </script>
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0c0c0f" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -32,8 +55,8 @@
         <h1>The Cinematic Version <br>of Your Design</h1>
         <p class="lede">Instead of an image post with “just a little something I’ve been working on”, give your design the grand reveal it deserves.</p>
         <div class="cta">
-          <a class="button" id="download" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest"><span>Download now</span></a>
-          <p class="cta-note" id="cta-note">Free Mac app + <a class="low" href="https://www.figma.com/community/plugin/1685059029492451885">Figma plugin</a><span id="cta-version"></span></p>
+          <a class="button" id="download" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest"><span>Free download</span></a>
+          <p class="cta-note" id="cta-note"><a class="quiet" href="#privacy">Privacy-first</a> Mac app + <a class="quiet" href="https://www.figma.com/community/plugin/1685059029492451885">Figma plugin</a><span id="cta-version"></span></p>
         </div>
       </div>
     </header>
@@ -77,17 +100,32 @@
          short checklist. Every row is checked against the code: the app's
          only outside request is the update check to GitHub; the plugin's
          network access is localhost only (manifest allowedDomains). -->
-    <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+    <div class="tiles">
+    <section class="facts privacy" id="privacy" aria-labelledby="privacy-title">
+      <span class="eyes eyes-4" data-depth="0.012" aria-hidden="true"></span>
       <h2 id="privacy-title">Shameless Promotion doesn’t collect, share or sell any of your data.</h2>
       <dl class="checklist">
         <div><dt>Personal data</dt><dd>None collected</dd></div>
         <div><dt>Account</dt><dd>None needed</dd></div>
+        <div><dt>Price</dt><dd>Free</dd></div>
         <div><dt>Analytics</dt><dd>None in the app or the plugin</dd></div>
         <div><dt>Your designs</dt><dd>Stay on your Mac. The Figma plugin only talks to the app on your computer.</dd></div>
-        <div><dt>Updates</dt><dd>The app checks GitHub for new versions. No ID or personal data is sent.</dd></div>
+        <div><dt>Updates</dt><dd>The app checks for new versions, but installs them only when you say so.</dd></div>
         <div><dt>Prototypes</dt><dd>Recording opens your prototype on figma.com, under Figma’s own policy.</dd></div>
       </dl>
     </section>
+
+    <!-- REQUIREMENTS (Hampus 2026-10-01): what the app needs, as a second
+         tile under privacy, kept away from the Download button -->
+    <section class="facts" id="requirements" aria-labelledby="requirements-title">
+      <h2 id="requirements-title">System requirements</h2>
+      <dl class="checklist">
+        <div><dt>Mac</dt><dd>Apple silicon (M1 or later)</dd></div>
+        <div><dt>macOS</dt><dd>14 Sonoma or later</dd></div>
+        <div><dt>Figma</dt><dd>The free plugin from Figma Community</dd></div>
+      </dl>
+    </section>
+    </div>
 
     <!-- the footer within the content's width (Hampus 2026-09-30): the two
          facts stacked on the left (the designer first), feedback on the right; the GitHub pill

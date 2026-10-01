@@ -4,7 +4,7 @@
 
 Instead of an image post with “just a little something I’ve been working on”, give your design the grand reveal it deserves.
 
-**[Download now →](https://github.com/svallfors/shameless-promotion-releases/releases/latest)** Free Mac app + [Figma plugin](https://www.figma.com/community/plugin/1685059029492451885). Website: [shamelesspromotion.app](https://shamelesspromotion.app)
+**[Free download →](https://github.com/svallfors/shameless-promotion-releases/releases/latest)** Privacy-first Mac app + [Figma plugin](https://www.figma.com/community/plugin/1685059029492451885). Website: [shamelesspromotion.app](https://shamelesspromotion.app)
 
 ## From Figma to Pure Cinema, in Minutes
 
@@ -40,9 +40,10 @@ Shameless Promotion doesn’t collect, share or sell any of your data.
 
 - **Personal data:** None collected
 - **Account:** None needed
+- **Price:** Free
 - **Analytics:** None in the app or the plugin
 - **Your designs:** Stay on your Mac. The Figma plugin only talks to the app on your computer.
-- **Updates:** The app checks GitHub for new versions. No ID or personal data is sent.
+- **Updates:** The app checks for new versions, but installs them only when you say so.
 - **Prototypes:** Recording opens your prototype on figma.com, under Figma’s own policy.
 
 ## Feedback
