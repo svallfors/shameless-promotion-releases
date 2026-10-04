@@ -1,15 +1,10 @@
 // Shameless Promotion — the page's three behaviours (2026-09-17):
 //  1. the eyes follow the cursor or a finger and drift with it (parallax by depth)
-//  2. the films load lazily, one set for light and one for dark
+//  2. the showcase film loads lazily and plays muted, looping, inline
 //  3. the download button reads the latest release from GitHub
 'use strict';
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const darkQuery = matchMedia('(prefers-color-scheme: dark)');
-const isDark = () => {
-  const forced = document.documentElement.dataset.theme;
-  return forced ? forced === 'dark' : darkQuery.matches;
-};
 
 /* ---------- 1. the eyes ---------- */
 // They watch the cursor, rest looking in toward the page, blink now and then,
@@ -315,26 +310,20 @@ const isDark = () => {
   kick();
 })();
 
-/* ---------- 2. the films ---------- */
+/* ---------- 2. the film ---------- */
+// one showcase video, the same in both schemes: loaded as it nears the view,
+// then muted, looping and inline; with reduced motion it waits on its
+// poster with controls instead of playing by itself
 (() => {
   const videos = [...document.querySelectorAll('.film video')];
   if (!videos.length) return;
-  const srcFor = (v) => (isDark() ? v.dataset.dark : v.dataset.light);
-  // the still behind each film follows the scheme as well
-  const dress = (v) => {
-    const poster = isDark() ? (v.dataset.posterDark || v.dataset.posterLight) : (v.dataset.posterLight || v.dataset.posterDark);
-    if (poster) v.poster = poster; else v.removeAttribute('poster');
-  };
-  videos.forEach(dress);
   const load = (v) => {
-    const src = srcFor(v);
-    if (!src || v.dataset.loaded === src) return;
-    v.dataset.loaded = src;
-    v.src = src;
+    if (v.dataset.loaded) return;
+    v.dataset.loaded = '1';
+    v.src = v.dataset.src;
+    if (reduceMotion) { v.controls = true; return; }
+    v.oncanplay = () => { v.play().catch(() => {}); };
     v.load();
-    // no such file yet: fall back to the poster (or the plain tile) quietly
-    v.onerror = () => { v.removeAttribute('src'); v.dataset.loaded = ''; };
-    v.oncanplay = () => { if (!reduceMotion) v.play().catch(() => {}); };
   };
   const io = 'IntersectionObserver' in window
     ? new IntersectionObserver((entries) => {
@@ -342,8 +331,6 @@ const isDark = () => {
       }, { rootMargin: '200px' })
     : null;
   videos.forEach((v) => (io ? io.observe(v) : load(v)));
-  // the scheme flips while the page is open: swap the set
-  darkQuery.addEventListener('change', () => videos.forEach((v) => { dress(v); if (v.dataset.loaded) load(v); }));
 })();
 
 /* ---------- 3. the download button ---------- */

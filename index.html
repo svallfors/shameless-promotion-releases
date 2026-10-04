@@ -61,19 +61,13 @@
       </div>
     </header>
 
-    <!-- three films; the src is picked per color scheme in main.js
-         (videos/light-N.mp4 · videos/dark-N.mp4) and loaded when the row
-         scrolls into view; the poster follows the scheme too (Hampus's dark
-         frame has its own three stills). Until a file exists the poster stands in. -->
-    <section class="films" aria-label="Example films">
+    <!-- the showcase film (Hampus 2026-10-04): one video in place of the
+         three placeholder tiles, the same in light and dark; it loads when it
+         nears the view and plays muted, looping, inline (main.js) -->
+    <section class="films" aria-label="Example film">
       <figure class="film">
-        <video muted loop playsinline preload="none" data-poster-light="assets/poster-light-1.jpg" data-poster-dark="assets/poster-dark-1.jpg" data-light="videos/light-1.mp4" data-dark="videos/dark-1.mp4"></video>
-      </figure>
-      <figure class="film">
-        <video muted loop playsinline preload="none" data-poster-light="assets/poster-light-2.jpg" data-poster-dark="assets/poster-dark-2.jpg" data-light="videos/light-2.mp4" data-dark="videos/dark-2.mp4"></video>
-      </figure>
-      <figure class="film">
-        <video muted loop playsinline preload="none" data-poster-light="assets/poster-light-3.jpg" data-poster-dark="assets/poster-dark-3.jpg" data-light="videos/light-3.mp4" data-dark="videos/dark-3.mp4"></video>
+        <video muted loop playsinline preload="none" poster="assets/showcase-poster.jpg" data-src="videos/showcase.mp4" width="1920" height="1080"></video>
+        <figcaption>Generated in 1080p, Low quality. Designs from Figma Community by <a class="low" href="https://www.figma.com/@wblekhoa">@wblekhoa</a>, <a class="low" href="https://www.figma.com/@uxbymaharram">@uxbymaharram</a> and <a class="low" href="https://www.figma.com/@svallfors">@svallfors</a>.</figcaption>
       </figure>
     </section>
 
