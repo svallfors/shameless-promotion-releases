@@ -71,6 +71,9 @@ body {
   font-feature-settings: "salt" 1, "ordn" 1, "dlig" 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* no lone last words, page-wide (Hampus 2026-10-05); headings, the
+     privacy claim and the film caption keep their own balance */
+  text-wrap: pretty;
 }
 a { color: inherit; }
 
