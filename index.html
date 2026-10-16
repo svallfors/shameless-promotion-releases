@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shameless Promotion — The Cinematic Version of Your Design</title>
+  <title>Shameless Promotion — The Cinematic Version of Your Figma Design</title>
   <meta name="description" content="Shameless Promotion is a free Mac app and Figma plugin that turns your static Figma designs into cinematic animations. Cinematic design videos, in minutes.">
   <meta property="og:title" content="Shameless Promotion">
-  <meta property="og:description" content="The cinematic version of your design. A free Mac app and Figma plugin.">
+  <meta property="og:description" content="The cinematic version of your Figma design. A free Mac app and Figma plugin.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shamelesspromotion.app/">
   <meta property="og:image" content="https://shamelesspromotion.app/assets/og.png">
@@ -45,11 +45,17 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Geist:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="styles.css?v=b5ae62bf2d">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Geist:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="styles.css?v=a01081664f">
 </head>
 <body>
   <main class="page">
+
+    <!-- feedback in the page's top right corner (Hampus 2026-10-16), the footer retired -->
+    <a class="pill feedback" href="https://github.com/svallfors/shameless-promotion-releases/issues/new">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="assets/heart.svg#Frame"></use></svg>
+      Share feedback
+    </a>
 
     <header class="hero">
       <div class="hero-inner">
@@ -60,8 +66,7 @@
         <span class="eyes eyes-1" data-depth="0.018" aria-hidden="true"></span>
         <span class="eyes eyes-2" data-depth="0.010" aria-hidden="true"></span>
         <p class="eyebrow">This is <mark>Shameless Promotion</mark></p>
-        <h1>The Cinematic Version <br>of Your Design</h1>
-        <p class="lede">Instead of an image post with “just a little something I’ve been working on”, give your design the grand reveal it deserves.</p>
+        <h1>The Cinematic Version <br>of Your Figma Design</h1>
         <div class="cta">
           <a class="button" id="download" href="https://github.com/svallfors/shameless-promotion-releases/releases/latest"><span>Free download</span></a>
           <p class="cta-note" id="cta-note"><a class="quiet" href="#privacy">Privacy-first</a> Mac app + <a class="quiet" href="https://www.figma.com/community/plugin/1685059029492451885">Figma plugin</a><span id="cta-version"></span></p>
@@ -69,20 +74,50 @@
       </div>
     </header>
 
-    <!-- the showcase film (Hampus 2026-10-04): one video in place of the
-         three placeholder tiles, the same in light and dark; it loads when it
-         nears the view and plays muted, looping, inline (main.js) -->
-    <section class="films" aria-label="Example film">
-      <figure class="film">
-        <video muted loop playsinline preload="none" poster="assets/showcase-poster.jpg" data-src="videos/showcase.mp4" width="1920" height="1080"></video>
-        <figcaption>Made in Shameless Promotion and exported in 1080p at Low quality. Designs from Figma Community by <a class="quiet" href="https://www.figma.com/@wblekhoa">@wblekhoa</a>, <a class="quiet" href="https://www.figma.com/@uxbymaharram">@uxbymaharram</a> and <a class="quiet" href="https://www.figma.com/@svallfors">@svallfors</a>.</figcaption>
-      </figure>
+    <!-- THE SHOWCASE (Hampus 2026-10-16, his design): the app playing a film,
+         big and leaning, with the four example films floating around it - three
+         in front, one behind - each drifting at its own depth as the page
+         scrolls (main.js). On narrow screens the app sits alone and the films
+         follow in a snapping strip -->
+    <section class="showcase" aria-label="Shameless Promotion playing a film, and four example films">
+      <!-- the app window, light or dark with the page (main.js picks the file);
+           it plays once as it comes into view, then offers a replay -->
+      <div class="demo">
+        <div class="demo-stage">
+          <video class="demo-video" muted playsinline preload="none" width="3436" height="2122"
+            data-light="videos/app-light.mp4" data-dark="videos/app-dark.mp4"
+            data-poster-light="assets/poster-app-light.jpg" data-poster-dark="assets/poster-app-dark.jpg"></video>
+          <button class="demo-replay" type="button" aria-label="Replay" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- the four films, looping while on screen; data-scroll is how much faster
+           (or, behind the app, slower) than the page each one scrolls -->
+      <div class="clips">
+        <figure class="clip clip-1" data-scroll="0.10">
+          <video muted loop playsinline preload="none" poster="assets/poster-clip-1.jpg" data-src="videos/clip-1.mp4" width="1280" height="720"></video>
+        </figure>
+        <figure class="clip clip-2" data-scroll="-0.05">
+          <video muted loop playsinline preload="none" poster="assets/poster-clip-2.jpg" data-src="videos/clip-2.mp4" width="1280" height="720"></video>
+        </figure>
+        <figure class="clip clip-3" data-scroll="0.06">
+          <video muted loop playsinline preload="none" poster="assets/poster-clip-3.jpg" data-src="videos/clip-3.mp4" width="1280" height="720"></video>
+        </figure>
+        <figure class="clip clip-4" data-scroll="0.08">
+          <video muted loop playsinline preload="none" poster="assets/poster-clip-4.jpg" data-src="videos/clip-4.mp4" width="1280" height="720"></video>
+          <span class="eyes eyes-6" data-depth="0.016" aria-hidden="true"></span>
+        </figure>
+      </div>
+      <span class="eyes eyes-5" data-depth="0.012" data-scroll="0.12" aria-hidden="true"></span>
     </section>
+    <p class="clips-cap">Shameless Promotion with demo exports from Figma Community by <a class="quiet" href="https://www.figma.com/@wblekhoa">@wblekhoa</a>, <a class="quiet" href="https://www.figma.com/@uxbymaharram">@uxbymaharram</a>, <a class="quiet" href="https://www.figma.com/@claude_ui">@claude_ui</a> and <a class="quiet" href="https://www.figma.com/@svallfors">@svallfors</a>.</p>
 
     <section class="story">
       <span class="eyes eyes-3" data-depth="0.014" aria-hidden="true"></span>
       <h2>From Figma to <mark>Pure Cinema</mark>, in Minutes</h2>
-      <p>Shameless Promotion is a Mac app that turns your static Figma designs into cinematic animations. Fluid camera motions, simulated lens effects, and animated layers highlight the parts you're proudest of.</p>
+      <p>Instead of a boring post with <em>“just a little something I’ve been working on”</em>, give your design the grand reveal it deserves.</p>
+      <p>Shameless Promotion is a Mac app that adds fluid camera motions, simulated lens effects, and animated layer highlights to your static Figma designs.</p>
       <p>The Figma plugin takes your selected frames and tagged layers and puts them in a video timeline, without causing or demanding any change to your files.</p>
       <p>Spend a few minutes recomposing the scenes or tweaking the animations, or export straight away with the preset scenes in crystal sharp 4K resolution.</p>
       <p>This is not After Effects, and it is not meant to replace walkthrough screen recordings. Shameless Promotion is the cheap upgrade to an otherwise unflattering PNG.</p>
@@ -92,7 +127,7 @@
         <img class="avatar" src="assets/hampus.jpg" width="64" height="64" alt="">
         <div class="sign-text">
           <img class="signature" src="assets/signature.svg" width="248" height="59" alt="">
-          <p class="sign-name">Hampus Svallfors</p>
+          <p class="sign-name"><a class="quiet" href="https://svallfors.com">Hampus Svallfors</a></p>
         </div>
       </div>
     </section>
@@ -128,17 +163,6 @@
       </dl>
     </section>
     </div>
-
-    <!-- the footer within the content's width (Hampus 2026-09-30): the two
-         facts stacked on the left (the designer first), feedback on the right; the GitHub pill
-         and "Share your feedback 🙌" retired -->
-    <footer class="foot">
-      <p class="foot-line"><span>Designed by <a class="low" href="https://svallfors.com">Hampus Svallfors</a></span><span>New releases weekly</span></p>
-      <a class="pill" href="https://github.com/svallfors/shameless-promotion-releases/issues/new">
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="assets/heart.svg#Frame"></use></svg>
-        Share feedback
-      </a>
-    </footer>
 
   </main>
 
@@ -190,6 +214,6 @@
     </svg>
   </template>
 
-  <script src="main.js?v=9267e3bbef" defer></script>
+  <script src="main.js?v=11e5f7ed7f" defer></script>
 </body>
 </html>

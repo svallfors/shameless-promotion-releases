@@ -1,14 +1,14 @@
 # Shameless Promotion
 
-**The Cinematic Version of Your Design.**
-
-Instead of an image post with “just a little something I’ve been working on”, give your design the grand reveal it deserves.
+**The Cinematic Version of Your Figma Design.**
 
 **[Free download →](https://github.com/svallfors/shameless-promotion-releases/releases/latest)** Privacy-first Mac app + [Figma plugin](https://www.figma.com/community/plugin/1685059029492451885). Website: [shamelesspromotion.app](https://shamelesspromotion.app)
 
 ## From Figma to Pure Cinema, in Minutes
 
-Shameless Promotion is a Mac app that turns your static Figma designs into cinematic animations. Fluid camera motions, simulated lens effects, and animated layers highlight the parts you're proudest of.
+Instead of a boring post with *“just a little something I’ve been working on”*, give your design the grand reveal it deserves.
+
+Shameless Promotion is a Mac app that adds fluid camera motions, simulated lens effects, and animated layer highlights to your static Figma designs.
 
 The Figma plugin takes your selected frames and tagged layers and puts them in a video timeline, without causing or demanding any change to your files.
 

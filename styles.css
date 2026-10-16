@@ -3,17 +3,27 @@
    Geist for everything else. Light is the designed mode; dark is derived here
    with the app's own night palette. */
 
+/* the example clips' width in the narrow screens' strip until main.js fits it (see .clips) */
+:root { --clip-w: min(600px, 70vw); }
+/* the app window's width in the showcase; the hero sizes against it too */
+:root { --ui-w: min(960px, 52vw); }
 :root {
   color-scheme: light dark;
   --bg: #ffffff;
   --text: #09090b;        /* headline */
-  --text-2: #232323;      /* eyebrow, lede */
+  --text-2: #232323;      /* eyebrow */
   --text-3: #52525e;      /* body */
   --text-dim: #71717d;    /* notes, footer */
   --text-label: #71717d;  /* the checklists' labels */
   --pill: #f4f4f5;
   --pill-hover: #e9e9ec;
   --tile: #f4f4f5;
+  /* the app demo's edge: a soft lift on light, a light hairline on dark */
+  --demo-edge: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04), 0 12px 32px -8px rgba(0, 0, 0, 0.14), 0 40px 80px -24px rgba(0, 0, 0, 0.18);
+  /* the floating films' edge, the same lift a size down */
+  --clip-edge: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.05), 0 16px 32px -10px rgba(0, 0, 0, 0.22);
+  /* an enlarged film: lifted well clear of the blurred page */
+  --lightbox-edge: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.06), 0 40px 100px -24px rgba(0, 0, 0, 0.35);
   --hl: #fef199;          /* the marker highlight */
   --hl-text: #232323;
   --btn-border: #fce24c;
@@ -33,6 +43,9 @@
     --pill: #27272a;
     --pill-hover: #323236;
     --tile: #27272a;
+    --demo-edge: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 40px 80px -24px rgba(0, 0, 0, 0.5);
+    --clip-edge: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 16px 32px -10px rgba(0, 0, 0, 0.55);
+    --lightbox-edge: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 40px 100px -24px rgba(0, 0, 0, 0.7);
     --hl: transparent;      /* dark: the marker becomes yellow type */
     --hl-text: #fce24c;
     --btn-border: #fce24c;
@@ -52,6 +65,9 @@
     --pill: #27272a;
     --pill-hover: #323236;
     --tile: #27272a;
+    --demo-edge: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 40px 80px -24px rgba(0, 0, 0, 0.5);
+    --clip-edge: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 16px 32px -10px rgba(0, 0, 0, 0.55);
+    --lightbox-edge: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 40px 100px -24px rgba(0, 0, 0, 0.7);
     --hl: transparent;      /* dark: the marker becomes yellow type */
     --hl-text: #fce24c;
     --btn-border: #fce24c;
@@ -84,11 +100,11 @@ a { color: inherit; }
   align-items: center;
   gap: 48px;
   min-height: 100vh;
-  padding: 64px 16px 16px;
+  padding: 64px 16px 80px; /* the foot: room under the last tile now the footer is gone */
   overflow-x: clip;
 }
 @media (max-width: 720px) {
-  .page { padding: 48px 24px 24px; gap: 40px; }
+  .page { padding: 72px 24px 64px; gap: 40px; } /* clear of the feedback pill */
 }
 
 /* ---------- type ---------- */
@@ -119,24 +135,6 @@ mark {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-/* the small links' marker: fully behind the text, like the mark (Hampus
-   2026-09-30 - the low 9px stroke sat offset under small type) */
-a.low {
-  background: var(--hl);
-  color: var(--text);
-  font-weight: 500;
-  padding: 0 1px;
-  border-radius: 1px;
-  text-decoration: none;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-a.low:hover { text-decoration: underline; text-underline-position: from-font; }
-/* dark (Hampus's dark frame): the name is underlined in the footer grey */
-:root[data-theme="dark"] a.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) a.low { background: none; color: var(--text-dim); text-decoration: underline; text-underline-position: from-font; }
-}
 /* links that read as the text around them until hovered, then take the
    yellow marker with darker type (Hampus 2026-10-01; on the dark ground the
    marker is yellow type, as everywhere). The marker's padding is pulled back
@@ -151,20 +149,20 @@ a.quiet {
 a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-text); }
 
 /* ---------- hero ---------- */
-/* the hero fills the first screen: its content sits at the vertical
-   center and the film row ends about 24px under the fold, so most of the
-   films show and invite the scroll (Hampus 2026-09-17). The row's height
-   follows from its width (three tiles at 469:296 with 24px gaps); svh so a
-   phone's collapsing toolbar doesn't move it; off on narrow screens */
+/* the first screen (Hampus 2026-10-16): the hero centred in the room above
+   the showcase, which runs about 10% of its height past the fold - air at
+   the top, and a nudge to scroll. The showcase is the app window's height
+   (--ui-w at the recording's 2122/3436, less its 4 cropped rows); above it
+   sit the page's 64 px top, the 48 px gap and its own 24 px. A short window
+   leaves the hero at its own height */
 .hero {
-  --row-w: min(100vw - 32px, 1800px);
-  --film-h: calc((var(--row-w) - 48px) / 3 * 296 / 469);
+  --show-h: calc(var(--ui-w) * 2122 / 3436 - 4px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: calc(100svh - 64px - 48px - var(--film-h) + 24px);
+  min-height: calc(100svh - 64px - 48px - 24px - 0.9 * var(--show-h));
 }
 .hero-inner {
   position: relative;
@@ -175,16 +173,6 @@ a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-te
   width: 100%;
   max-width: 672px;
   text-align: center;
-}
-@media (max-width: 720px) {
-  .hero { min-height: 0; }
-}
-.hero .lede {
-  margin: 24px 0 0;
-  max-width: 476px;
-  color: var(--text-2);
-  font-size: 20px;
-  line-height: 32px;
 }
 .cta {
   display: flex;
@@ -238,40 +226,212 @@ a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-te
 .button:active { transform: translateY(1px); filter: brightness(0.98); }
 .button:focus-visible { outline: 2px solid var(--btn-border); outline-offset: 3px; }
 
-/* ---------- the film ---------- */
-/* one showcase video (Hampus 2026-10-04: "a little smaller than the current
-   container for the three images") - 16:9, the same in light and dark */
-.films {
-  width: min(88%, 1440px);
-  margin-bottom: 32px; /* more room before the story than the page's 48px gap */
+/* ---------- the showcase: the app and the floating films ---------- */
+/* THE SHOWCASE (Hampus 2026-10-16, his design): the app's window playing a
+   film, big, with a slight lean and turn, and the four example films floating
+   around it - two on the left and one on the right in front, one on the right
+   tucked behind the window. Every place and size is a share of the window's
+   width (--ui-w), measured off the design, so the picture scales as one; the
+   films and a pair of eyes drift at their own depths as the page scrolls
+   (main.js). Narrow screens get the window alone, then the films in a strip. */
+.showcase {
+  position: relative;
+  isolation: isolate; /* the films layer against the window and nothing else */
+  width: var(--ui-w);
+  margin-top: 24px;
 }
-.film { margin: 0; }
-.film video {
+/* THE APP: a recording of the whole window playing a film, light or dark with
+   the page; it plays once when it comes into view and offers a replay.
+   Rounded corners on the square recording, a soft lift on light and a light
+   hairline on dark */
+.demo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  perspective: 2400px;
+}
+.demo-stage {
+  position: relative;
+  overflow: hidden; /* crops the recording's top and bottom edges (.demo-video's margins) */
+  border-radius: 14px;
+  box-shadow: var(--demo-edge);
+  transform: rotateX(5deg) rotateY(-7deg);
+  transform-origin: 50% 50%;
+}
+.demo-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3436 / 2122;
+  margin: -2px 0; /* the recording's first and last rows go (Hampus 2026-10-14: crop 2 px at the bottom, then the top as well) */
+  border-radius: 14px;
+  background: var(--tile);
+}
+.demo-replay {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: rgba(24, 24, 27, 0.72);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+.demo-replay:hover { background: rgba(24, 24, 27, 0.88); }
+.demo-replay:active { transform: scale(0.96); }
+.demo-replay:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.demo-replay[hidden] { display: none; }
+
+/* the films: placed around the window, a little over a quarter of its width
+   each. No z-index on the wrapper, so each film layers against the window */
+.clips { position: absolute; inset: 0; pointer-events: none; }
+.clip {
+  position: absolute;
+  width: calc(var(--ui-w) * 0.286);
+  margin: 0;
+  z-index: 2;
+  pointer-events: auto;
+  cursor: zoom-in;
+}
+.clip:focus-visible { outline: none; }
+.clip:focus-visible video { outline: 2px solid var(--btn-border); outline-offset: 3px; }
+.clip video {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 16px;
-  background: #111;
+  border-radius: 12px;
+  background: var(--tile);
+  box-shadow: var(--clip-edge);
 }
-/* what the film is and whose designs it shows */
-.film figcaption {
-  margin-top: 12px;
+.clip-1 { left: calc(var(--ui-w) * -0.19);  top: calc(var(--ui-w) * 0.093); }
+.clip-3 { left: calc(var(--ui-w) * -0.10);  top: calc(var(--ui-w) * 0.302); }
+.clip-4 { left: calc(var(--ui-w) * 0.885);  top: calc(var(--ui-w) * 0.297); }
+/* behind the window, its left edge under the window's right */
+.clip-2 { left: calc(var(--ui-w) * 0.965);  top: calc(var(--ui-w) * 0.089); z-index: 0; }
+/* the two new pairs of eyes: one by the window's foot on the left, one
+   peeking over the green film's bottom edge */
+.showcase .eyes { z-index: 3; }
+.eyes-5 { left: calc(var(--ui-w) * -0.106); top: calc(var(--ui-w) * 0.54); }
+.eyes-6 { left: calc(37% - 20px); top: calc(100% - 22px); }
+
+/* AN ENLARGED FILM (Hampus 2026-10-16: "clicking one centers it, brings it
+   forward, blurs the back content. Clicking anywhere again returns it"): a
+   copy of the film grows out of its spot to the middle of the screen over a
+   veil that blurs the page (main.js); a click anywhere or Esc sends it back */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  cursor: zoom-out;
+}
+.lightbox-veil {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) 50%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+.lightbox video {
+  position: relative;
+  display: block;
+  width: min(92vw, 1280px, calc(86svh * 16 / 9));
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 24px; /* rounder than in place, a hint of the film scaled up (Hampus 2026-10-16) */
+  background: var(--tile);
+  box-shadow: var(--lightbox-edge);
+  transform-origin: 0 0;
+}
+/* the film and its caption: the caption hangs under the film, so the film
+   itself stays in the middle of the screen */
+.lightbox-film { position: relative; }
+.lightbox-cap {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  color: var(--text-label); /* the footer grey, lighter on dark: it reads over the blurred page */
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  text-wrap: balance;
+}
+.lightbox:focus { outline: none; }
+html.lightbox-open { overflow: hidden; }
+
+/* what the window and the films are and whose designs they show */
+.clips-cap {
+  width: min(100%, 880px);
+  margin: -16px 0 64px; /* close under the showcase, then air before the story (Hampus 2026-10-16: more space) */
   color: var(--text-dim);
   font-size: 12px;
   line-height: 16px;
   text-align: center;
   text-wrap: balance;
 }
+
+/* narrower windows: the window alone at the column's width, then the films
+   in one row that runs to the window's edges and snaps film by film; the
+   film width (--clip-w, set by main.js) always leaves 30% of the next one
+   showing, so the strip reads as one that scrolls */
+@media (max-width: 900px) {
+  .hero { min-height: 0; }
+  .showcase { width: 100%; display: flex; flex-direction: column; gap: 24px; margin-top: 0; }
+  .demo { width: min(100%, 960px); align-self: center; }
+  .showcase > .eyes, .eyes-6 { display: none; }
+  .clips {
+    position: static;
+    display: flex;
+    gap: 16px;
+    width: calc(100% + 32px);
+    margin: 0 -16px;
+    padding: 0 16px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(127, 127, 127, 0.35) transparent; /* reads on either ground */
+    pointer-events: auto;
+  }
+  .clip { position: static; flex: 0 0 var(--clip-w); width: auto; min-width: 0; scroll-snap-align: start; }
+  .lightbox video { border-radius: 16px; }
+  .clip:last-child { scroll-snap-align: end; }
+  .clip video { box-shadow: none; }
+  .clips-cap { margin: -24px 0 24px; }
+}
 @media (max-width: 720px) {
-  .films { width: 100%; margin-bottom: 16px; }
-  .film video { border-radius: 12px; }
+  .demo-stage, .demo-video { border-radius: 10px; }
+  .demo-replay { right: 10px; bottom: 10px; width: 36px; height: 36px; }
+  .clips {
+    gap: 12px;
+    width: calc(100% + 48px);
+    margin: 0 -24px;
+    padding: 0 24px;
+    scroll-padding: 0 24px;
+    scrollbar-width: none;
+  }
+  .clips::-webkit-scrollbar { display: none; }
+  .clip video { border-radius: 10px; }
+  .clips-cap { margin: -16px 0 16px; }
   /* the designed two-line break is for the wide headline; narrow, let
      text-wrap: balance find the lines */
   h1 br { display: none; }
 }
-
 /* ---------- story ---------- */
 .story {
   position: relative;
@@ -358,28 +518,9 @@ a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-te
   .checklist > div { grid-template-columns: 1fr; gap: 2px; }
 }
 
-/* ---------- footer ---------- */
-.foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  width: 100%;
-  max-width: 480px;
-  margin-top: auto;
-  padding-top: 64px;
-}
-.foot-line {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: 0;
-  color: var(--text-dim);
-  font-size: 13px;
-  line-height: 18px;
-  text-align: left;
-  font-feature-settings: "salt" 1, "ordn" 1, "ss02" 1, "ss03" 1, "ss04" 1, "ss05" 1, "ss06" 1, "dlig" 1;
-}
+/* ---------- feedback ---------- */
+/* in the page's top right corner, 12 px in from the top and the side (Hampus 2026-10-16) */
+.feedback { position: absolute; top: 12px; right: 12px; z-index: 2; }
 .pill {
   display: inline-flex;
   align-items: center;
@@ -398,11 +539,7 @@ a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-te
   transition: background 0.15s ease;
 }
 .pill:hover { background: var(--pill-hover); }
-.pill svg { color: var(--text); opacity: 0.8; }
-.pill:last-child svg { color: #f5a623; opacity: 1; }
-@media (max-width: 720px) {
-  .foot { padding-top: 40px; }
-}
+.pill svg { color: #f5a623; }
 
 /* ---------- the eyes ---------- */
 /* anchored to the hero (672 wide) and the story (480 wide) at the design's
@@ -418,7 +555,7 @@ a.quiet:hover, a.quiet:focus-visible { background: var(--hl); color: var(--hl-te
 }
 .eyes-1 { top: 91px;  left: min(calc(100% + 237px), calc(50vw + 280px)); }
 .eyes-2 { top: 396px; left: max(-266px, calc(352px - 50vw)); }
-.eyes-3 { top: 417px; left: min(calc(100% + 233px), calc(50vw + 184px)); }
+.eyes-3 { top: 308px; left: min(calc(100% + 233px), calc(50vw + 184px)); }
 /* left of the privacy tile, by its foot (Hampus 2026-10-01); the tile is
    480 wide and centred, so 256px - 50vw keeps the pair 16px off the edge */
 .eyes-4 { top: 387px; left: max(-301px, calc(256px - 50vw)); }

@@ -1,6 +1,7 @@
 // Shameless Promotion — the page's three behaviours (2026-09-17):
 //  1. the eyes follow the cursor or a finger and drift with it (parallax by depth)
-//  2. the showcase film loads lazily and plays muted, looping, inline
+//  2. the app demo plays once in view (light or dark with the page); the clips
+//     loop and float around it at their own depths
 //  3. the download button reads the latest release from GitHub
 'use strict';
 
@@ -310,27 +311,236 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   kick();
 })();
 
-/* ---------- 2. the film ---------- */
-// one showcase video, the same in both schemes: loaded as it nears the view,
-// then muted, looping and inline; with reduced motion it waits on its
-// poster with controls instead of playing by itself
+/* ---------- 2. the app demo and the clips ---------- */
 (() => {
-  const videos = [...document.querySelectorAll('.film video')];
-  if (!videos.length) return;
-  const load = (v) => {
-    if (v.dataset.loaded) return;
-    v.dataset.loaded = '1';
-    v.src = v.dataset.src;
-    if (reduceMotion) { v.controls = true; return; }
-    v.oncanplay = () => { v.play().catch(() => {}); };
-    v.load();
+  const darkQuery = matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => {
+    const forced = document.documentElement.dataset.theme;
+    return forced ? forced === 'dark' : darkQuery.matches;
   };
-  const io = 'IntersectionObserver' in window
-    ? new IntersectionObserver((entries) => {
-        for (const en of entries) if (en.isIntersecting) { load(en.target); io.unobserve(en.target); }
-      }, { rootMargin: '200px' })
-    : null;
-  videos.forEach((v) => (io ? io.observe(v) : load(v)));
+  const near = (el, fn, rootMargin = '200px') => {
+    if (!('IntersectionObserver' in window)) { fn(); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); fn(); }
+    }, { rootMargin });
+    io.observe(el);
+  };
+
+  // THE APP: light or dark with the page; it plays once when half of it is
+  // on screen, then holds its last frame and offers a replay. With reduced
+  // motion it waits on its poster behind the same button.
+  const demo = document.querySelector('.demo-video');
+  const replay = document.querySelector('.demo-replay');
+  if (demo && replay) {
+    const scheme = () => (isDark() ? 'dark' : 'light');
+    let shown = '';
+    const dress = () => {
+      const s = scheme();
+      if (s === shown) return;
+      shown = s;
+      demo.poster = demo.dataset[`poster${s === 'dark' ? 'Dark' : 'Light'}`];
+      if (demo.dataset.loaded) { demo.src = demo.dataset[s]; demo.load(); offerReplay(); }
+    };
+    const offerReplay = () => {
+      replay.setAttribute('aria-label', demo.currentTime > 0 ? 'Replay' : 'Play');
+      replay.hidden = false;
+    };
+    const playFromStart = () => {
+      if (!demo.dataset.loaded) { demo.dataset.loaded = '1'; demo.src = demo.dataset[scheme()]; }
+      replay.hidden = true;
+      demo.currentTime = 0;
+      demo.play().catch(offerReplay);
+    };
+    dress();
+    demo.addEventListener('ended', offerReplay);
+    replay.addEventListener('click', playFromStart);
+    // a click on the finished film replays it too
+    demo.addEventListener('click', () => { if (demo.ended || demo.paused) playFromStart(); });
+    // fetch it as it nears the view - unless it already started: a second
+    // src would restart the load and cut the play short (it then sat still)
+    near(demo, () => {
+      if (demo.dataset.loaded) return;
+      demo.preload = 'auto'; demo.dataset.loaded = '1'; demo.src = demo.dataset[scheme()];
+    });
+    if (reduceMotion) offerReplay();
+    else if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { io.disconnect(); playFromStart(); }
+      }, { threshold: 0.5 });
+      io.observe(demo);
+    } else playFromStart();
+    darkQuery.addEventListener('change', dress);
+    new MutationObserver(dress).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+
+  // narrow windows put the films in a strip under the app (styles.css)
+  const stripped = matchMedia('(max-width: 900px)');
+
+  // THE CLIPS' WIDTH in the strip: as close to 600 px as fits while it shows
+  // a whole number of clips plus 30% of the next - the peek says it scrolls
+  const strip = document.querySelector('.clips');
+  if (strip) {
+    const fit = () => {
+      if (!stripped.matches) return;
+      const cs = getComputedStyle(strip);
+      const gap = parseFloat(cs.columnGap) || 16;
+      const view = strip.clientWidth - parseFloat(cs.paddingLeft); // to the window's edge
+      const PEEK = 0.3, TARGET = 600;
+      const n = Math.max(1, Math.round((view - PEEK * TARGET) / (TARGET + gap)));
+      const w = (view - n * gap) / (n + PEEK);
+      document.documentElement.style.setProperty('--clip-w', `${Math.floor(w)}px`);
+    };
+    fit();
+    addEventListener('resize', fit);
+    stripped.addEventListener('change', fit);
+  }
+
+  // THE FLOAT (Hampus 2026-10-16: "slight parallax"): around the app, each
+  // film (and the eyes by its foot) moves with the page plus its own share of
+  // the showcase's distance from the middle of the window - a film in front
+  // runs a little ahead of the page, the one behind lags. The design's
+  // picture is exact with the showcase centred on screen.
+  const showcase = document.querySelector('.showcase');
+  const floaters = showcase ? [...showcase.querySelectorAll('[data-scroll]')] : [];
+  if (showcase && floaters.length && !reduceMotion) {
+    for (const el of floaters) el._k = parseFloat(el.dataset.scroll) || 0;
+    let queued = false;
+    const drift = () => {
+      queued = false;
+      if (stripped.matches) { for (const el of floaters) el.style.translate = ''; return; }
+      const r = showcase.getBoundingClientRect();
+      const d = r.top + r.height / 2 - innerHeight / 2;
+      for (const el of floaters) el.style.translate = `0 ${(d * el._k).toFixed(1)}px`;
+    };
+    const later = () => { if (!queued) { queued = true; requestAnimationFrame(drift); } };
+    addEventListener('scroll', later, { passive: true });
+    addEventListener('resize', later);
+    stripped.addEventListener('change', later);
+    drift();
+  }
+
+  // THE CLIPS: loaded as they near the view, looping while on screen. One
+  // clip in view sets its own source before it plays: the nearing observer
+  // and the on-screen one fire in no set order, and a clip that came on
+  // screen before its source was set never played (Hampus 2026-10-16: "about
+  // 2-3 play but not all 5") - with preload none nothing else would start it
+  for (const v of document.querySelectorAll('.clip video')) {
+    const load = () => {
+      if (v.getAttribute('src')) return;
+      v.src = v.dataset.src;
+      if (reduceMotion) v.controls = true;
+    };
+    near(v, load);
+    if (reduceMotion || !('IntersectionObserver' in window)) continue;
+    new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { load(); v.play().catch(() => {}); } else v.pause();
+      }
+    }, { threshold: 0.25 }).observe(v);
+  }
+})();
+
+/* ---------- 2b. an enlarged film ---------- */
+// A click on a film enlarges it (Hampus 2026-10-16): a copy grows out of the
+// film's own spot to the middle of the screen over a veil that blurs the page,
+// picking up where the film was; a click anywhere or Esc sends it back the
+// same way and hands the film its place in the loop. Keyboard: the films are
+// buttons, Enter or Space opens one.
+(() => {
+  const films = [...document.querySelectorAll('.clip')];
+  if (!films.length) return;
+  const EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+  const OPEN_MS = 460, CLOSE_MS = 380;
+  const RADIUS = 12; // the film's corners in place (styles.css .clip video)
+  const CAPTION = 'Demo saved in 720p, Low quality. You can export up to 4K at 60 fps in the app.';
+  let open = null;
+
+  // the transform that puts the copy (at its centred size) over the film
+  const over = (from, to) => {
+    const s = from.width / to.width;
+    return { transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${s})`, borderRadius: `${RADIUS / s}px` };
+  };
+
+  const expand = (fig) => {
+    if (open) return;
+    const src = fig.querySelector('video');
+    if (!src.getAttribute('src')) src.src = src.dataset.src;
+    const lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.tabIndex = -1;
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Example film');
+    const veil = document.createElement('div');
+    veil.className = 'lightbox-veil';
+    const v = document.createElement('video');
+    v.muted = true; v.loop = true; v.playsInline = true;
+    v.poster = src.poster;
+    v.src = src.currentSrc || src.src;
+    v.addEventListener('loadedmetadata', () => { v.currentTime = src.currentTime; }, { once: true });
+    // what the film is, under it (Hampus 2026-10-16): it comes in once the
+    // film has landed and leaves first on the way back
+    const film = document.createElement('div');
+    film.className = 'lightbox-film';
+    const cap = document.createElement('p');
+    cap.className = 'lightbox-cap';
+    cap.textContent = CAPTION;
+    film.append(v, cap);
+    lb.append(veil, film);
+    document.body.append(lb);
+    document.documentElement.classList.add('lightbox-open');
+    if (!reduceMotion) v.play().catch(() => {});
+    const radius = getComputedStyle(v).borderRadius;
+    const from = src.getBoundingClientRect(), to = v.getBoundingClientRect();
+    src.style.visibility = 'hidden';
+    if (!reduceMotion) {
+      v.animate([over(from, to), { transform: 'none', borderRadius: radius }], { duration: OPEN_MS, easing: EASE });
+      veil.animate([{ opacity: 0 }, { opacity: 1 }], { duration: OPEN_MS * 0.8, easing: 'ease-out' });
+      cap.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 240, delay: OPEN_MS * 0.75, easing: 'ease-out', fill: 'backwards' });
+    }
+    lb.focus({ preventScroll: true });
+    open = { fig, src, lb, v, veil, cap, closing: false };
+  };
+
+  const collapse = () => {
+    if (!open || open.closing) return;
+    open.closing = true;
+    const { fig, src, lb, v, veil, cap } = open;
+    const done = () => {
+      if (v.readyState >= 1) src.currentTime = v.currentTime;
+      src.style.visibility = '';
+      lb.remove();
+      document.documentElement.classList.remove('lightbox-open');
+      fig.focus({ preventScroll: true });
+      open = null;
+    };
+    if (reduceMotion) { done(); return; }
+    const to = v.getBoundingClientRect();
+    const radius = getComputedStyle(v).borderRadius;
+    const back = v.animate([{ transform: 'none', borderRadius: radius }, over(src.getBoundingClientRect(), to)],
+      { duration: CLOSE_MS, easing: EASE, fill: 'forwards' });
+    veil.animate([{ opacity: 1 }, { opacity: 0 }], { duration: CLOSE_MS, easing: 'ease-in', fill: 'forwards' });
+    cap.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, easing: 'ease-in', fill: 'forwards' });
+    back.finished.then(done, done);
+  };
+
+  for (const fig of films) {
+    fig.tabIndex = 0;
+    fig.setAttribute('role', 'button');
+    fig.setAttribute('aria-label', 'Enlarge film');
+    fig.addEventListener('click', () => expand(fig));
+    fig.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); expand(fig); }
+    });
+  }
+  document.addEventListener('click', (e) => { if (open && open.lb.contains(e.target)) collapse(); });
+  // Esc closes; so do Enter and Space on the open film (not the key press
+  // that opened it, which bubbles up from the film's button)
+  document.addEventListener('keydown', (e) => {
+    if (!open) return;
+    if (e.key === 'Escape' || ((e.key === 'Enter' || e.key === ' ') && open.lb.contains(e.target))) { e.preventDefault(); collapse(); }
+  });
 })();
 
 /* ---------- 3. the download button ---------- */
